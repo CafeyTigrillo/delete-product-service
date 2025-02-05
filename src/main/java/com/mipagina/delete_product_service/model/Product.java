@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-@Schema(description = "Product entity representing a product in the restaurant menu")
+@Schema(description = "Product entity representing a product in the system")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,8 @@ public class Product {
     @Schema(description = "Price of the product", example = "12.99")
     private Double price;
 
-    @Schema(description = "Category ID to which the product belongs (e.g., appetizer, main course, dessert)", example = "2")
+    @Schema(description = "Category ID to which the product belongs (e.g., appetizer, main course, dessert). \n " +
+            "This field is mandatory because a product cannot be deleted if it belongs to an active category.", example = "2")
     private Long id_category;
 
     @Schema(description = "Product availability status", example = "true")
