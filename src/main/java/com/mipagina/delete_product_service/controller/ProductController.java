@@ -18,9 +18,15 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
+    /**
+     * Deletes a product by its unique identifier.
+     *
+     * @param id_product The unique identifier of the product to delete.
+     */
     @Operation(
             summary = "Delete a product by ID",
-            description = "Remove a specific product from the system using its unique identifier"
+            description = "Remove a specific product from the system using its unique identifier. " +
+                    "Note that the product cannot be deleted if it is associated with an existing category."
     )
     @ApiResponses({
             @ApiResponse(
@@ -32,13 +38,17 @@ public class ProductController {
                     description = "Product not found"
             ),
             @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request, missing required fields"
+            ),
+            @ApiResponse(
                     responseCode = "500",
                     description = "Internal server error"
             )
     })
     @DeleteMapping("/products/{id_product}")
     public void deleteProduct(
-            @Parameter(description = "ID of the product to delete")
+            @Parameter(description = "ID of the product to delete", example = "5")
             @PathVariable Long id_product
     ) {
         productService.deleteProduct(id_product);
